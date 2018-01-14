@@ -1,3 +1,5 @@
+import { Person } from './person';
+
 export interface People {
-    results: Array<any>;
+    results: Person[];
 }

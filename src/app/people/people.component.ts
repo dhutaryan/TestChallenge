@@ -3,6 +3,8 @@ import { PeopleService } from './people.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { Person } from '../models/person';
+
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
@@ -11,7 +13,7 @@ import 'rxjs/add/operator/map';
 })
 export class PeopleComponent implements OnInit {
 
-  people: Observable<any>;
+  people: Observable<Person[]>;
 
   constructor(private HttpService: PeopleService) { }
 
