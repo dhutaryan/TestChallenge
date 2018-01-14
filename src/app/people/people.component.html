@@ -17,11 +17,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-              </tr>
+              <tr app-person *ngFor="let person of people | async" [person]="person"></tr>
             </tbody>
           </table>
       </div>
