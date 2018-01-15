@@ -19,7 +19,9 @@ export class PeopleComponent implements OnInit {
   constructor(private HttpService: PeopleService) { }
 
   ngOnInit() {
-    this.people = this.HttpService.getPeople().map(data => data.results);
-    this.people.subscribe(() => this.showSpinner = false);
+    this.people = this.HttpService.getPeople().map(data => {
+      this.showSpinner = false;
+      return data.results
+    });
   }
 }
