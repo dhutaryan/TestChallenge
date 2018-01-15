@@ -14,10 +14,12 @@ import { Person } from '../models/person';
 export class PeopleComponent implements OnInit {
 
   people: Observable<Person[]>;
+  showSpinner: boolean = true;
 
   constructor(private HttpService: PeopleService) { }
 
   ngOnInit() {
     this.people = this.HttpService.getPeople().map(data => data.results);
+    this.people.subscribe(() => this.showSpinner = false);
   }
 }
