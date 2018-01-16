@@ -17,10 +17,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr app-person *ngFor="let person of people | async" [person]="person"></tr>
+              <tr app-person *ngFor="let person of people$ | async" [person]="person"></tr>
             </tbody>
           </table>
-          <app-spinner *ngIf="showSpinner"></app-spinner>
+          <!-- <app-spinner *ngIf="showSpinner"></app-spinner> -->
       </div>
   </div>
 </div>
