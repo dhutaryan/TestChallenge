@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { PeopleComponent } from './people/people.component';
 import { PersonComponent } from './people/person/person.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { GenderPipe } from './people/person/gender.pipe';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     AppComponent,
     PeopleComponent,
     PersonComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    GenderPipe
   ],
   imports: [
     BrowserModule,

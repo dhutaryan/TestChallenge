@@ -15,16 +15,6 @@ export class PersonComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-      if (this.person.gender === 'male') {
-        this.person.gender = 'Male';
-      }
 
-      if (this.person.gender === 'female') {
-        this.person.gender = 'Female';
-      }
-
-      if (this.person.gender === 'n/a') {
-        this.person.gender = 'Not available';
-      }
   }
 }
