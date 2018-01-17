@@ -14,7 +14,7 @@ import { SpinnerService } from '../shared/spinner/spinner.service';
 })
 export class PeopleComponent implements OnInit {
 
-  people$: Person[];
+  people: Person[];
 
   constructor(
     private peopleService: PeopleService,
@@ -26,7 +26,7 @@ export class PeopleComponent implements OnInit {
     this.peopleService.getPeople().subscribe(
       (data) => {
         this.spinnerService.disable();
-        this.people$ = data
+        this.people = data
       },
       (err) => {
         this.spinnerService.disable();

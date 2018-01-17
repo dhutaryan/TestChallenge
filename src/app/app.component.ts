@@ -12,8 +12,5 @@ export class AppComponent {
   constructor(private spinnerService: SpinnerService) { }
 
   ngOnInit() {
-    this.spinnerService.status.subscribe((value: boolean) => {
-        this.showSpinner = value;
-    });
-}
+  }
 }
