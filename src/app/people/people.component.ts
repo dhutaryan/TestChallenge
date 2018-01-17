@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PeopleService } from './people.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/';
 
 import { Person } from '../models/person';
 
@@ -16,9 +17,9 @@ export class PeopleComponent implements OnInit {
   people$: Observable<Person[]>;
   showSpinner: boolean = true;
 
-  constructor(private HttpService: PeopleService) { }
+  constructor(private PeopleService: PeopleService) { }
 
   ngOnInit() {
-    this.people$ = this.HttpService.getPeople();
+    this.people$ = this.PeopleService.getPeople();
   }
 }
