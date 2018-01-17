@@ -12,7 +12,7 @@ export class PeopleService {
   constructor(private http: HttpClient) { }
 
   getPeople(): Observable<Person[]> {
-    return <Observable<Person[]>>this.http.get('https://swapi.co/api/people/')
+    return this.http.get('https://swapi.co/api/people/')
       .map((data: People) => data.results);
   }
 }
