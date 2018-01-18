@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
