@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Person } from '../models/person';
+import { SpinnerService } from '../shared/spinner/spinner.service';
 
 @Component({
   selector: 'app-people',
@@ -13,11 +14,23 @@ import { Person } from '../models/person';
 })
 export class PeopleComponent implements OnInit {
 
-  people: Observable<Person[]>;
+  people: Person[];
 
-  constructor(private HttpService: PeopleService) { }
+  constructor(
+    private peopleService: PeopleService,
+    private spinnerService: SpinnerService,
+  ) { }
 
   ngOnInit() {
-    this.people = this.HttpService.getPeople().map(data => data.results);
+    this.spinnerService.enable();
+    this.peopleService.getPeople().subscribe(
+      (data) => {
+        this.spinnerService.disable();
+        this.people = data
+      },
+      (err) => {
+        this.spinnerService.disable();
+      }
+    );
   }
 }
