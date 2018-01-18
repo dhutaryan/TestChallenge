@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { Person } from '../../models/person';
+import { Hero } from '../../models/hero';
 
 @Component({
   selector: '[app-person]',
@@ -10,7 +10,7 @@ import { Person } from '../../models/person';
   styleUrls: ['./person.component.css']
 })
 export class PersonComponent implements OnInit {
-  @Input() person: Person;
+  @Input() person: Hero;
 
   constructor() { }
 

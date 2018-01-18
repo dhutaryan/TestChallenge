@@ -3,7 +3,7 @@ import { PeopleService } from './people.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { Person } from '../models/person';
+import { Hero } from '../models/hero';
 import { SpinnerService } from '../shared/spinner/spinner.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { SpinnerService } from '../shared/spinner/spinner.service';
 })
 export class PeopleComponent implements OnInit {
 
-  people: Person[];
+  people: Hero[];
 
   constructor(
     private peopleService: PeopleService,
