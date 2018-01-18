@@ -5,12 +5,12 @@ import 'rxjs/add/operator/map';
 import { Hero } from '../../models/hero';
 
 @Component({
-  selector: '[app-person]',
-  templateUrl: './person.component.html',
-  styleUrls: ['./person.component.css']
+  selector: '[app-hero]',
+  templateUrl: './hero.component.html',
+  styleUrls: ['./hero.component.css']
 })
-export class PersonComponent implements OnInit {
-  @Input() person: Hero;
+export class HeroComponent implements OnInit {
+  @Input() hero: Hero;
 
   constructor() { }
 

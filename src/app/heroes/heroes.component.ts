@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PeopleService } from './people.service';
+import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -7,21 +7,20 @@ import { Hero } from '../models/hero';
 import { SpinnerService } from '../shared/spinner/spinner.service';
 
 @Component({
-  selector: 'app-people',
-  templateUrl: './people.component.html',
-  styleUrls: ['./people.component.css'],
-  providers: [PeopleService]
+  selector: 'app-heroes',
+  templateUrl: './heroes.component.html',
+  styleUrls: ['./heroes.component.css'],
 })
-export class PeopleComponent implements OnInit {
+export class HeroesComponent implements OnInit {
 
   heroes$: Observable<Hero[]>;
 
   constructor(
-    private peopleService: PeopleService,
+    private heroesService: HeroesService,
     private spinnerService: SpinnerService,
   ) { }
 
   ngOnInit() {
-    this.heroes$ = this.peopleService.getPeople();
+    this.heroes$ = this.heroesService.getHeroes();
   }
 }

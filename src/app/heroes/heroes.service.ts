@@ -6,11 +6,11 @@ import 'rxjs/add/operator/map';
 import { Hero } from '../models/hero';
 
 @Injectable()
-export class PeopleService {
+export class HeroesService {
 
   constructor(private http: HttpClient) { }
 
-  getPeople(): Observable<Hero[]> {
+  getHeroes(): Observable<Hero[]> {
     return this.http.get('https://swapi.co/api/people/')
       .map((data: any) => data.results);
   }
