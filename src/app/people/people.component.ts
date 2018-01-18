@@ -14,7 +14,7 @@ import { SpinnerService } from '../shared/spinner/spinner.service';
 })
 export class PeopleComponent implements OnInit {
 
-  people: Hero[];
+  heroes$: Observable<Hero[]>;
 
   constructor(
     private peopleService: PeopleService,
@@ -22,15 +22,6 @@ export class PeopleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.spinnerService.enable();
-    this.peopleService.getPeople().subscribe(
-      (data) => {
-        this.spinnerService.disable();
-        this.people = data
-      },
-      (err) => {
-        this.spinnerService.disable();
-      }
-    );
+    this.heroes$ = this.peopleService.getPeople();
   }
 }
