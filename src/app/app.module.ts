@@ -4,27 +4,29 @@ import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
-import { PeopleComponent } from './people/people.component';
-import { PersonComponent } from './people/person/person.component';
+import { HeroesComponent } from './heroes/heroes.component';
+import { HeroComponent } from './heroes/hero/hero.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
-import { GenderPipe } from './people/person/gender.pipe';
+import { GenderPipe } from './heroes/hero/gender.pipe';
 import { SpinnerService } from './shared/spinner/spinner.service';
+import { HeroesService } from './heroes/heroes.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PeopleComponent,
-    PersonComponent,
+    HeroesComponent,
+    HeroComponent,
     SpinnerComponent,
-    GenderPipe
+    GenderPipe,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     SpinnerService,
+    HeroesService,
   ],
   bootstrap: [AppComponent]
 })
