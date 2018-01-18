@@ -10,8 +10,8 @@ export class HeroesService {
 
   constructor(private http: HttpClient) { }
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get('https://swapi.co/api/people/')
+  getHeroes(searchValue = ''): Observable<Hero[]> {
+    return this.http.get('https://swapi.co/api/people/?search=' + searchValue)
       .map((data: any) => data.results);
   }
 }

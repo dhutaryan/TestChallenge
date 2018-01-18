@@ -6,9 +6,15 @@
             <li class="active"><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Heroes</a></li>
           </ul>
           <br/>
-          <input type="text" class="form-control" placeholder="Start typing for search...">
+          <input 
+            [formControl]="searchField"
+            type="text" 
+            class="form-control" 
+            placeholder="Start typing for search...">
           <br/>
-          <table class="table table-bordered" *ngIf="(heroes$ | async) as heroes; else loading">
+          <table 
+            class="table table-hover" 
+            *ngIf="(heroes$ | async) as heroes; else loading">
             <thead>
               <tr>
                 <th scope="col">Name</th>
