@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { SpinnerService } from './spinner.service';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpinnerComponent implements OnInit {
   showSpinner: boolean;
 
-  constructor(private spinnerService: SpinnerService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.spinnerService.status.subscribe((value: boolean) => {
-      this.showSpinner = value;
-    });
+    
   }
 
 }
