@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/concat';
 
 import { Hero } from '../models/hero';
 import { SpinnerService } from '../shared/spinner/spinner.service';
@@ -25,7 +26,11 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this.searchField = new FormControl();
-    this.heroes$ = this.search();
+    this.heroes$ = this.initHeroes();
+  }
+
+  initHeroes(): Observable<Hero[]> {
+    return this.heroesService.getHeroes().concat(this.search());
   }
 
   search() {
