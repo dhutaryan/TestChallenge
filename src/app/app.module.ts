@@ -8,7 +8,6 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { HeroComponent } from './heroes/hero/hero.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { GenderPipe } from './heroes/hero/gender.pipe';
-import { SpinnerService } from './shared/spinner/spinner.service';
 import { HeroesService } from './heroes/heroes.service';
 
 
@@ -25,7 +24,6 @@ import { HeroesService } from './heroes/heroes.service';
     HttpClientModule,
   ],
   providers: [
-    SpinnerService,
     HeroesService,
   ],
   bootstrap: [AppComponent]
