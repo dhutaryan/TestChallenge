@@ -6,6 +6,10 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/finally';
 
 import { Hero } from '../models/hero';
 import { SpinnerService } from '../shared/spinner/spinner.service';
@@ -30,13 +34,22 @@ export class HeroesComponent implements OnInit {
   }
 
   initHeroes(): Observable<Hero[]> {
-    return this.heroesService.getHeroes().concat(this.search());
+    return this.heroes().concat(this.search());
+  }
+
+  heroes() {
+    this.spinnerService.enable();
+    return this.heroesService.getHeroes()
+      .finally(() => this.spinnerService.disable());
   }
 
   search() {
     return this.searchField.valueChanges
-      .debounceTime(300)
       .distinctUntilChanged()
-      .switchMap(query => this.heroesService.getHeroes(query));
+      .debounceTime(300)
+      .do(() => this.spinnerService.enable())
+      .switchMap(query => this.heroesService.getHeroes(query))
+      .do(() => this.spinnerService.disable())
+      .catch(err => Observable.throw(err));
   }
 }
