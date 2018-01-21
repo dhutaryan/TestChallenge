@@ -22,11 +22,11 @@
                 <th scope="col">Created at</th>
               </tr>
             </thead>
-            <tbody *ngIf="!spinnerService.status.value">
+            <tbody *ngIf="!loading">
               <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
             </tbody>
           </table>
-          <app-spinner></app-spinner>
+          <app-spinner *ngIf="loading"></app-spinner>
       </div>
   </div>
 </div>

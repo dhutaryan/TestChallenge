@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SpinnerService } from './shared/spinner/spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,7 @@ import { SpinnerService } from './shared/spinner/spinner.service';
 export class AppComponent { 
   showSpinner: boolean;
 
-  constructor(private spinnerService: SpinnerService) { }
+  constructor() { }
 
   ngOnInit() {
   }

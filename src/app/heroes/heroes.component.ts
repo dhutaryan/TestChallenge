@@ -12,7 +12,6 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/finally';
 
 import { Hero } from '../models/hero';
-import { SpinnerService } from '../shared/spinner/spinner.service';
 
 @Component({
   selector: 'app-heroes',
@@ -22,11 +21,9 @@ import { SpinnerService } from '../shared/spinner/spinner.service';
 export class HeroesComponent implements OnInit {
   searchField: FormControl;
   heroes$: Observable<Hero[]>;
+  loading: boolean = false;
 
-  constructor(
-    private heroesService: HeroesService,
-    private spinnerService: SpinnerService,
-  ) { }
+  constructor(private heroesService: HeroesService) { }
 
   ngOnInit() {
     this.searchField = new FormControl();
@@ -34,22 +31,22 @@ export class HeroesComponent implements OnInit {
   }
 
   initHeroes(): Observable<Hero[]> {
-    return this.heroes().concat(this.search());
+    return this.getHeroes().concat(this.search());
   }
 
-  heroes() {
-    this.spinnerService.enable();
+  getHeroes() {
+    this.loading = true;
     return this.heroesService.getHeroes()
-      .finally(() => this.spinnerService.disable());
+      .finally(() => this.loading = false);
   }
 
   search() {
     return this.searchField.valueChanges
       .distinctUntilChanged()
       .debounceTime(300)
-      .do(() => this.spinnerService.enable())
+      .do(() => this.loading = true)
       .switchMap(query => this.heroesService.getHeroes(query))
-      .do(() => this.spinnerService.disable())
+      .do(() => this.loading = false)
       .catch(err => Observable.throw(err));
   }
 }
