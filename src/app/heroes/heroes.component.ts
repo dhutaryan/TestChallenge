@@ -20,18 +20,19 @@ import { Hero } from '../models/hero';
 })
 export class HeroesComponent implements OnInit {
   searchField: FormControl;
-  heroes$: Observable<Hero[]>;
+  heroes: Hero[];
   loading: boolean = false;
 
   constructor(private heroesService: HeroesService) { }
 
   ngOnInit() {
     this.searchField = new FormControl();
-    this.heroes$ = this.initHeroes();
+    this.initHeroes();
   }
 
-  initHeroes(): Observable<Hero[]> {
-    return this.getHeroes().concat(this.search());
+  initHeroes() {
+    this.getHeroes().concat(this.search())
+      .subscribe((heroes: Hero[]) => this.heroes = heroes);
   }
 
   getHeroes() {
@@ -45,7 +46,7 @@ export class HeroesComponent implements OnInit {
       .distinctUntilChanged()
       .debounceTime(300)
       .do(() => this.loading = true)
-      .switchMap(query => this.heroesService.getHeroes(query))
+      .switchMap(searchTerm => this.heroesService.getHeroes(searchTerm))
       .do(() => this.loading = false)
       .catch(err => Observable.throw(err));
   }

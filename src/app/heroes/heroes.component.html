@@ -10,11 +10,13 @@
             [formControl]="searchField"
             type="text" 
             class="form-control" 
-            placeholder="Start typing for search...">
+            placeholder="Start typing for search..."
+          >
           <br/>
           <table 
             class="table table-hover" 
-            *ngIf="(heroes$ | async) as heroes">
+            *ngIf="!loading"
+          >
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -22,7 +24,7 @@
                 <th scope="col">Created at</th>
               </tr>
             </thead>
-            <tbody *ngIf="!loading">
+            <tbody>
               <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
             </tbody>
           </table>
