@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
@@ -17,6 +18,7 @@ import { Hero } from '../models/hero';
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroesComponent implements OnInit {
   searchField: FormControl;
@@ -31,7 +33,8 @@ export class HeroesComponent implements OnInit {
   }
 
   initHeroes() {
-    this.getHeroes().concat(this.search())
+    this.getHeroes()
+      .concat(this.search())
       .subscribe((heroes: Hero[]) => this.heroes = heroes);
   }
 
