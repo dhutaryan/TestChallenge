@@ -24,7 +24,7 @@ import { Hero } from '../models/hero';
 export class HeroesComponent implements OnInit {
   searchField: FormControl;
   heroes: Hero[];
-  count: number;
+  totalHeroes: number;
   loading$ = new BehaviorSubject<boolean>(false);
 
   constructor(private heroesService: HeroesService) { }
@@ -38,7 +38,7 @@ export class HeroesComponent implements OnInit {
     this.getHeroes()
       .concat(this.search())
       .subscribe(({ count, heroes }: { count: number, heroes: Hero[] }) => {
-        this.count = count;
+        this.totalHeroes = count;
         this.heroes = heroes;
       });
   }
@@ -51,8 +51,8 @@ export class HeroesComponent implements OnInit {
 
   search() {
     return this.searchField.valueChanges
-      .distinctUntilChanged()
       .debounceTime(300)
+      .distinctUntilChanged()
       .do(() => this.loading$.next(true))
       .switchMap(searchTerm => this.heroesService.getHeroes(searchTerm))
       .do(() => this.loading$.next(false))

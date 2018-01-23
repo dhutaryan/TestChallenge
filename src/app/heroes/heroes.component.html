@@ -29,7 +29,7 @@
             </tbody>
           </table>
           <app-spinner *ngIf="loading$ | async"></app-spinner>
-          <app-pagination *ngIf="!(loading$ | async)" [totalHeroes]="count"></app-pagination>
+          <app-pagination *ngIf="!(loading$ | async)" [totalHeroes]="totalHeroes"></app-pagination>
       </div>
   </div>
 </div>
