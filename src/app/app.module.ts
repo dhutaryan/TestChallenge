@@ -9,6 +9,7 @@ import { HeroComponent } from './heroes/hero/hero.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { GenderPipe } from './heroes/hero/gender.pipe';
 import { HeroesService } from './heroes/heroes.service';
+import { GenderClassPipe } from './heroes/hero/gender-class.pipe';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { HeroesService } from './heroes/heroes.service';
     HeroComponent,
     SpinnerComponent,
     GenderPipe,
+    GenderClassPipe,
   ],
   imports: [
     BrowserModule,
