@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -23,7 +24,8 @@ import { Hero } from '../models/hero';
 export class HeroesComponent implements OnInit {
   searchField: FormControl;
   heroes: Hero[];
-  loading: boolean = false;
+  count: number;
+  loading$ = new BehaviorSubject<boolean>(false);
 
   constructor(private heroesService: HeroesService) { }
 
@@ -35,22 +37,25 @@ export class HeroesComponent implements OnInit {
   initHeroes() {
     this.getHeroes()
       .concat(this.search())
-      .subscribe((heroes: Hero[]) => this.heroes = heroes);
+      .subscribe(({ count, heroes }: { count: number, heroes: Hero[] }) => {
+        this.count = count;
+        this.heroes = heroes;
+      });
   }
 
   getHeroes() {
-    this.loading = true;
+    this.loading$.next(true);
     return this.heroesService.getHeroes()
-      .finally(() => this.loading = false);
+      .finally(() => this.loading$.next(false));
   }
 
   search() {
     return this.searchField.valueChanges
       .distinctUntilChanged()
       .debounceTime(300)
-      .do(() => this.loading = true)
+      .do(() => this.loading$.next(true))
       .switchMap(searchTerm => this.heroesService.getHeroes(searchTerm))
-      .do(() => this.loading = false)
+      .do(() => this.loading$.next(false))
       .catch(err => Observable.throw(err));
   }
 }

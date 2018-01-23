@@ -15,7 +15,7 @@
           <br/>
           <table 
             class="table table-hover" 
-            *ngIf="!loading"
+            *ngIf="!(loading$ | async)"
           >
             <thead>
               <tr>
@@ -28,7 +28,8 @@
               <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
             </tbody>
           </table>
-          <app-spinner *ngIf="loading"></app-spinner>
+          <app-spinner *ngIf="loading$ | async"></app-spinner>
+          <app-pagination *ngIf="!(loading$ | async)" [totalHeroes]="count"></app-pagination>
       </div>
   </div>
 </div>
