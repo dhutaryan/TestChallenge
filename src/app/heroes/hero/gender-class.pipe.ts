@@ -4,18 +4,13 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'genderClass'
 })
 export class GenderClassPipe implements PipeTransform {
+  private genders = {
+    Male: 'text-primary',
+    Female: 'text-danger',
+    'Not available': 'text-muted',
+  };
 
   transform(gender: string): string {
-    if (gender === 'Male') {
-      return 'text-primary';
-    }
-
-    if (gender === 'Female') {
-      return 'text-danger';
-    }
-
-    if (gender === 'Not available') {
-      return 'text-muted';
-    }
+    return this.genders[gender];
   }
 }
