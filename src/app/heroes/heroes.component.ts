@@ -69,6 +69,8 @@ export class HeroesComponent implements OnInit {
 
   page() {
     return this.pageNumber$
-      .switchMap(page => this.heroesService.getHeroes(undefined, page));
+      .do(() => this.loading$.next(true))
+      .switchMap(page => this.heroesService.getHeroes(undefined, page))
+      .do(() => this.loading$.next(false));
   }
 }
