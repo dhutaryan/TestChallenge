@@ -11,7 +11,8 @@ import 'rxjs/add/operator/take';
 })
 export class PaginationComponent implements OnChanges {
   @Input() totalHeroes: number;
-  @Input() currentPage$: any;
+  @Input() currentPage$: Observable<number>;
+
   private pageList$: Observable<number[]>;
   private pageSize: number = 10;
 

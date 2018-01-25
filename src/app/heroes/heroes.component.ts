@@ -3,16 +3,13 @@ import { FormControl } from '@angular/forms';
 import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/merge';
 
 import { Hero } from '../models/hero';
@@ -39,7 +36,7 @@ export class HeroesComponent implements OnInit {
 
   initHeroes() {
     this.getHeroes()
-      .concat(this.search())
+      .merge(this.search())
       .subscribe(({ count, heroes }: { count: number, heroes: Hero[] }) => {
         this.totalHeroes = count;
         this.heroes = heroes;
@@ -47,10 +44,10 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes() {
-    this.loading$.next(true);
     return this.currentPage$
+      .distinctUntilChanged()
       .do(() => this.loading$.next(true))
-      .switchMap(page => this.heroesService.getHeroes(undefined, page))
+      .switchMap(page => this.heroesService.getHeroes(this.searchField.value, page))
       .do(() => this.loading$.next(false));
   }
 
@@ -59,7 +56,8 @@ export class HeroesComponent implements OnInit {
       .debounceTime(300)
       .distinctUntilChanged()
       .do(() => this.loading$.next(true))
-      .switchMap(searchTerm => this.heroesService.getHeroes(searchTerm))
+      .switchMap(searchTerm => this.heroesService.search(searchTerm))
+      .do(() => this.currentPage$.next(1))
       .do(() => this.loading$.next(false))
       .catch(err => Observable.throw(err));
   }
