@@ -7,6 +7,7 @@ export class GenderClassPipe implements PipeTransform {
   private genders = {
     Male: 'text-primary',
     Female: 'text-danger',
+    Hermaphrodite: 'text-muted',
     'Not available': 'text-muted',
   };
 

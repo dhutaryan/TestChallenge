@@ -11,27 +11,23 @@ import 'rxjs/add/operator/take';
 })
 export class PaginationComponent implements OnChanges {
   @Input() totalHeroes: number;
-  @Output() pageChanged = new EventEmitter<number>();
+  @Input() currentPage$: any;
   private pageList$: Observable<number[]>;
   private pageSize: number = 10;
 
   constructor() { }
 
   ngOnChanges({ totalHeroes }: SimpleChanges) {
-    totalHeroes.currentValue && this.pagesCount();
+    totalHeroes.currentValue && this.generatePages();
   }
 
-  pagesCount() {
+  generatePages() {
     const totalPages: number = Math.ceil(this.totalHeroes / this.pageSize);
 
     this.pageList$ = Observable
       .range(1, totalPages)
       .reduce((total, item) => [...total, item], [])
       .take(5);
-  }
-
-  changePage(pageNumber) {
-    this.pageChanged.emit(pageNumber);
   }
 
 }

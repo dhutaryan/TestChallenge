@@ -28,7 +28,7 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[];
   totalHeroes: number;
   loading$ = new BehaviorSubject<boolean>(false);
-  pageNumber$ = new Subject<number>();
+  currentPage$ = new BehaviorSubject<number>(1);
 
   constructor(private heroesService: HeroesService) { }
 
@@ -39,8 +39,7 @@ export class HeroesComponent implements OnInit {
 
   initHeroes() {
     this.getHeroes()
-      .merge(this.search())
-      .merge(this.page())
+      .concat(this.search())
       .subscribe(({ count, heroes }: { count: number, heroes: Hero[] }) => {
         this.totalHeroes = count;
         this.heroes = heroes;
@@ -49,8 +48,10 @@ export class HeroesComponent implements OnInit {
 
   getHeroes() {
     this.loading$.next(true);
-    return this.heroesService.getHeroes()
-      .finally(() => this.loading$.next(false));
+    return this.currentPage$
+      .do(() => this.loading$.next(true))
+      .switchMap(page => this.heroesService.getHeroes(undefined, page))
+      .do(() => this.loading$.next(false));
   }
 
   search() {
@@ -61,16 +62,5 @@ export class HeroesComponent implements OnInit {
       .switchMap(searchTerm => this.heroesService.getHeroes(searchTerm))
       .do(() => this.loading$.next(false))
       .catch(err => Observable.throw(err));
-  }
-
-  pageChanged(pageNumber: number) {
-    this.pageNumber$.next(pageNumber);
-  }
-
-  page() {
-    return this.pageNumber$
-      .do(() => this.loading$.next(true))
-      .switchMap(page => this.heroesService.getHeroes(undefined, page))
-      .do(() => this.loading$.next(false));
   }
 }

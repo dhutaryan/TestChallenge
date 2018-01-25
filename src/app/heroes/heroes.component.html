@@ -33,7 +33,7 @@
           </div>
           <app-pagination 
             [totalHeroes]="totalHeroes"
-            (pageChanged)="pageChanged($event)"
+            [currentPage$]="currentPage$"
           ></app-pagination>
       </div>
   </div>

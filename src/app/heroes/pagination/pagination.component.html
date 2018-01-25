@@ -13,7 +13,7 @@
         <a 
           class="page-link" 
           href="#"
-          (click)="changePage(pageNumber)"
+          (click)="currentPage$.next(pageNumber)"
         >{{pageNumber}}</a>
     </li>
     <li class="page-item">
