@@ -13,24 +13,25 @@
             placeholder="Start typing for search..."
           >
           <br/>
-          <table 
-            class="table table-hover" 
-            *ngIf="!(loading$ | async)"
-          >
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Created at</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
-            </tbody>
-          </table>
-          <app-spinner *ngIf="loading$ | async"></app-spinner>
+          <div class="table-container">
+            <table 
+              class="table table-hover" 
+              *ngIf="!(loading$ | async)"
+            >
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Created at</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
+              </tbody>
+            </table>
+            <app-spinner *ngIf="loading$ | async"></app-spinner>
+          </div>
           <app-pagination 
-            *ngIf="!(loading$ | async)" 
             [totalHeroes]="totalHeroes"
             (pageChanged)="pageChanged($event)"
           ></app-pagination>

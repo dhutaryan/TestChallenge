@@ -1,3 +1,7 @@
-.col-xs-5 {
+.col-xs-6 {
     font-family: "Roboto", Arial, sans-serif;
+}
+
+.table-container {
+    height: 400px;
 }

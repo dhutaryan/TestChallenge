@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/range';
 import 'rxjs/add/operator/reduce';
@@ -9,7 +9,7 @@ import 'rxjs/add/operator/take';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnChanges {
   @Input() totalHeroes: number;
   @Output() pageChanged = new EventEmitter<number>();
   private pageList$: Observable<number[]>;
@@ -17,8 +17,8 @@ export class PaginationComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    this.pagesCount();
+  ngOnChanges({ totalHeroes }: SimpleChanges) {
+    totalHeroes.currentValue && this.pagesCount();
   }
 
   pagesCount() {
