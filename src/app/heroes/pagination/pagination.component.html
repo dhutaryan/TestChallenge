@@ -9,7 +9,7 @@
     <li 
       class="page-item"
       *ngFor="let pageNumber of pageList$ | async"
-      [ngClass]="{'active': currentPage$.value === pageNumber}"
+      [class.active]="currentPage$.value === pageNumber"
     >
         <a 
           class="page-link" 

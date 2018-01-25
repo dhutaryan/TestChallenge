@@ -2,6 +2,11 @@
     font-family: "Roboto", Arial, sans-serif;
 }
 
+.content-main {
+    width: 500px;
+    margin: auto;
+}
+
 .table-container {
     height: 400px;
 }
