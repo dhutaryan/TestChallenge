@@ -10,6 +10,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { GenderPipe } from './heroes/hero/gender.pipe';
 import { HeroesService } from './heroes/heroes.service';
 import { GenderClassPipe } from './heroes/hero/gender-class.pipe';
+import { PaginationComponent } from './heroes/pagination/pagination.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { GenderClassPipe } from './heroes/hero/gender-class.pipe';
     SpinnerComponent,
     GenderPipe,
     GenderClassPipe,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

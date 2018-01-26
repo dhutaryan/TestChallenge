@@ -2,15 +2,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/merge';
 
 import { Hero } from '../models/hero';
 
@@ -23,7 +23,9 @@ import { Hero } from '../models/hero';
 export class HeroesComponent implements OnInit {
   searchField: FormControl;
   heroes: Hero[];
-  loading: boolean = false;
+  totalHeroes: number;
+  loading$ = new BehaviorSubject<boolean>(false);
+  currentPage$ = new BehaviorSubject<number>(1);
 
   constructor(private heroesService: HeroesService) { }
 
@@ -34,23 +36,29 @@ export class HeroesComponent implements OnInit {
 
   initHeroes() {
     this.getHeroes()
-      .concat(this.search())
-      .subscribe((heroes: Hero[]) => this.heroes = heroes);
+      .merge(this.search())
+      .subscribe(({ count, heroes }: { count: number, heroes: Hero[] }) => {
+        this.totalHeroes = count;
+        this.heroes = heroes;
+      });
   }
 
   getHeroes() {
-    this.loading = true;
-    return this.heroesService.getHeroes()
-      .finally(() => this.loading = false);
+    return this.currentPage$
+      .distinctUntilChanged()
+      .do(() => this.loading$.next(true))
+      .switchMap(page => this.heroesService.getHeroes(this.searchField.value, page))
+      .do(() => this.loading$.next(false));
   }
 
   search() {
     return this.searchField.valueChanges
-      .distinctUntilChanged()
       .debounceTime(300)
-      .do(() => this.loading = true)
-      .switchMap(searchTerm => this.heroesService.getHeroes(searchTerm))
-      .do(() => this.loading = false)
+      .distinctUntilChanged()
+      .do(() => this.loading$.next(true))
+      .switchMap(searchTerm => this.heroesService.search(searchTerm))
+      .do(() => this.currentPage$.next(1))
+      .do(() => this.loading$.next(false))
       .catch(err => Observable.throw(err));
   }
 }

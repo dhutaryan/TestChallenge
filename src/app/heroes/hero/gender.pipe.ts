@@ -9,7 +9,9 @@ export class GenderPipe implements PipeTransform {
     const genders = {
       male: 'Male',
       female: 'Female',
+      hermaphrodite: 'Hermaphrodite',
       'n/a': 'Not available',
+      none: 'Not available',
     }
 
     return genders[gender];

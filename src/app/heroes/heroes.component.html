@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="content-main">
-      <div class="col-xs-5">
+      <div>
           <h1>Star Wars <small>Encyclopedia</small></h1><hr/>
           <ul class="nav nav-tabs" role="tablist">
             <li class="active"><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Heroes</a></li>
@@ -13,22 +13,28 @@
             placeholder="Start typing for search..."
           >
           <br/>
-          <table 
-            class="table table-hover" 
-            *ngIf="!loading"
-          >
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Created at</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
-            </tbody>
-          </table>
-          <app-spinner *ngIf="loading"></app-spinner>
+          <div class="table-container">
+            <table 
+              class="table table-hover" 
+              *ngIf="!(loading$ | async)"
+            >
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Created at</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
+              </tbody>
+            </table>
+            <app-spinner *ngIf="loading$ | async"></app-spinner>
+          </div>
+          <app-pagination 
+            [totalHeroes]="totalHeroes"
+            [currentPage$]="currentPage$"
+          ></app-pagination>
       </div>
   </div>
 </div>
