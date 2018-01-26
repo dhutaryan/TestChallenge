@@ -7,31 +7,28 @@ import { Hero } from '../models/hero';
 
 @Injectable()
 export class HeroesService {
-  private params: HttpParams = new HttpParams();
-
   constructor(private http: HttpClient) { }
 
   getHeroes(searchTerm, pageNumber): Observable<{count: number, heroes: Hero[]}> {
+    let params: HttpParams = new HttpParams().set('page', pageNumber);
+
     if (searchTerm) {
-      this.params = this.params.set('search', searchTerm);
+      params = params.set('search', searchTerm);
     }
     
-    this.params = this.params.set('page', pageNumber);
-    
-    return this.http.get(`https://swapi.co/api/people/`, { params: this.params } )
-      .map((data: any) => ({
-        count: data.count,
-        heroes: data.results
-      }));
+    return this.http.get(`https://swapi.co/api/people/`, { params } )
+      .map(this.transformResponse);
   }
 
   search(searchTerm) {
-    this.params = this.params.set('search', searchTerm);
+    return this.http.get(`https://swapi.co/api/people/?search=${searchTerm}`)
+      .map(this.transformResponse);
+  }
 
-    return this.http.get(`https://swapi.co/api/people/`, { params: this.params })
-      .map((data: any) => ({
-        count: data.count,
-        heroes: data.results
-      }));
+  private transformResponse(data) {
+    return {
+      count: data.count,
+      heroes: data.results,
+    };
   }
 }
