@@ -16,7 +16,7 @@ export class HeroesService {
       params = params.set('search', searchTerm);
     }
     
-    return this.http.get(`https://swapi.co/api/people/`, { params } )
+    return this.http.get(`https://swapi.co/api/people/`, { params })
       .map(this.transformResponse);
   }
 

@@ -1,9 +1,21 @@
 <nav aria-label="Page navigation example" *ngIf="pageList$">
   <ul class="pagination">
-    <li class="page-item">
+      <li 
+        class="page-item" 
+        (click)="!isFirstPage() && goToFirstPage()"
+        [class.disabled]="isFirstPage()"
+      >
       <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li 
+      class="page-item" 
+      (click)="!isFirstPage() && goToPreviousPage()"
+      [class.disabled]="isFirstPage()"
+    >
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&lsaquo;</span>
       </a>
     </li>
     <li 
@@ -11,16 +23,28 @@
       *ngFor="let pageNumber of pageList$ | async"
       [class.active]="currentPage$.value === pageNumber"
     >
-        <a 
-          class="page-link" 
-          href="#"
-          (click)="currentPage$.next(pageNumber)"
-        >{{pageNumber}}</a>
+      <a 
+        class="page-link" 
+        href="#"
+        (click)="currentPage$.next(pageNumber)"
+      >{{pageNumber}}</a>
     </li>
-    <li class="page-item">
-      <a class="page-link" aria-label="Next">
+    <li 
+      class="page-item" 
+      (click)="!isLastPage() && goToNextPage()"
+      [class.disabled]="isLastPage()"
+    >
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&rsaquo;</span>
+      </a>
+    </li>
+    <li 
+      class="page-item" 
+      (click)="!isLastPage() && goToLastPage()"
+      [class.disabled]="isLastPage()"
+    >
+      <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
       </a>
     </li>
   </ul>

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/range';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/operator/take';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   selector: 'app-pagination',
@@ -11,7 +12,7 @@ import 'rxjs/add/operator/take';
 })
 export class PaginationComponent implements OnChanges {
   @Input() totalHeroes: number;
-  @Input() currentPage$: Observable<number>;
+  @Input() currentPage$: BehaviorSubject<number>;
 
   private pageList$: Observable<number[]>;
   private pageSize: number = 10;
@@ -22,13 +23,38 @@ export class PaginationComponent implements OnChanges {
     totalHeroes.currentValue && this.generatePages();
   }
 
-  generatePages() {
-    const totalPages: number = Math.ceil(this.totalHeroes / this.pageSize);
+  totalPagesNumber() {
+    return Math.ceil(this.totalHeroes / this.pageSize);
+  }
 
+  generatePages() {
     this.pageList$ = Observable
-      .range(1, totalPages)
-      .reduce((total, item) => [...total, item], [])
-      .take(5);
+      .range(1, this.totalPagesNumber())
+      .reduce((total, item) => [...total, item], []);
+  }
+
+  goToPreviousPage() {
+    this.currentPage$.next(this.currentPage$.value - 1);
+  }
+
+  goToNextPage() {
+    this.currentPage$.next(this.currentPage$.value + 1);
+  }
+
+  goToFirstPage() {
+    this.currentPage$.next(1);
+  }
+
+  goToLastPage() {
+    this.currentPage$.next(this.totalPagesNumber());
+  }
+
+  isFirstPage() {
+    return this.currentPage$.value === 1;
+  }
+
+  isLastPage() {
+    return this.currentPage$.value === this.totalPagesNumber();
   }
 
 }
