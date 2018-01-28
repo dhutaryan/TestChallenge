@@ -34,15 +34,11 @@ export class PaginationComponent implements OnChanges {
   }
 
   goToPreviousPage() {
-    if ((this.currentPage$.value - 1) > 0) {
-      this.currentPage$.next(this.currentPage$.getValue() - 1);
-    }
+    this.currentPage$.next(this.currentPage$.value - 1);
   }
 
   goToNextPage() {
-    if (this.currentPage$.value < this.totalPagesNumber()) {
-      this.currentPage$.next(this.currentPage$.getValue() + 1);
-    }
+    this.currentPage$.next(this.currentPage$.value + 1);
   }
 
   goToFirstPage() {
@@ -51,6 +47,14 @@ export class PaginationComponent implements OnChanges {
 
   goToLastPage() {
     this.currentPage$.next(this.totalPagesNumber());
+  }
+
+  isFirstPage() {
+    return this.currentPage$.value === 1;
+  }
+
+  isLastPage() {
+    return this.currentPage$.value === this.totalPagesNumber();
   }
 
 }

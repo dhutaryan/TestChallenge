@@ -2,8 +2,8 @@
   <ul class="pagination">
       <li 
         class="page-item" 
-        (click)="goToFirstPage()"
-        [class.disabled]="currentPage$.value === 1"
+        (click)="!isFirstPage() && goToFirstPage()"
+        [class.disabled]="isFirstPage()"
       >
       <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
@@ -11,8 +11,8 @@
     </li>
     <li 
       class="page-item" 
-      (click)="goToPreviousPage()"
-      [class.disabled]="currentPage$.value === 1"
+      (click)="!isFirstPage() && goToPreviousPage()"
+      [class.disabled]="isFirstPage()"
     >
       <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&lsaquo;</span>
@@ -31,8 +31,8 @@
     </li>
     <li 
       class="page-item" 
-      (click)="goToNextPage()"
-      [class.disabled]="currentPage$.value === totalPagesNumber()"
+      (click)="!isLastPage() && goToNextPage()"
+      [class.disabled]="isLastPage()"
     >
       <a class="page-link" href="#" aria-label="Next">
         <span aria-hidden="true">&rsaquo;</span>
@@ -40,8 +40,8 @@
     </li>
     <li 
       class="page-item" 
-      (click)="goToLastPage()"
-      [class.disabled]="currentPage$.value === totalPagesNumber()"
+      (click)="!isLastPage() && goToLastPage()"
+      [class.disabled]="isLastPage()"
     >
       <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&raquo;</span>
