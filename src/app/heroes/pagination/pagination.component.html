@@ -1,4 +1,4 @@
-<nav aria-label="Page navigation example" *ngIf="pageList$">
+<nav aria-label="Page navigation example">
   <ul class="pagination">
       <li 
         class="page-item" 
@@ -21,12 +21,12 @@
     <li 
       class="page-item"
       *ngFor="let pageNumber of pageList$ | async"
-      [class.active]="currentPage$.value === pageNumber"
+      [class.active]="currentPage === pageNumber"
     >
       <a 
         class="page-link" 
         href="#"
-        (click)="currentPage$.next(pageNumber)"
+        (click)="goToPage(pageNumber)"
       >{{pageNumber}}</a>
     </li>
     <li 
