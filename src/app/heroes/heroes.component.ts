@@ -26,6 +26,7 @@ export class HeroesComponent implements OnInit {
   totalHeroes: number;
   loading$ = new BehaviorSubject<boolean>(false);
   currentPage$ = new BehaviorSubject<number>(1);
+  currentPage = this.currentPage$.value;
 
   constructor(private heroesService: HeroesService) { }
 
@@ -47,6 +48,7 @@ export class HeroesComponent implements OnInit {
     return this.currentPage$
       .distinctUntilChanged()
       .do(() => this.loading$.next(true))
+      .do(page => this.currentPage = page)      
       .switchMap(page => this.heroesService.getHeroes(this.searchField.value, page))
       .do(() => this.loading$.next(false));
   }
@@ -57,7 +59,7 @@ export class HeroesComponent implements OnInit {
       .distinctUntilChanged()
       .do(() => this.loading$.next(true))
       .switchMap(searchTerm => this.heroesService.search(searchTerm))
-      .do(() => this.currentPage$.next(1))
+      .do(() => this.currentPage = 1)
       .do(() => this.loading$.next(false))
       .catch(err => Observable.throw(err));
   }

@@ -13,14 +13,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class PaginationComponent implements OnChanges {
   @Input() totalHeroes: number;
   @Input() currentPage$: BehaviorSubject<number>;
+  @Input() currentPage: number;
 
   private pageList$: Observable<number[]>;
   private pageSize: number = 10;
 
   constructor() { }
 
-  ngOnChanges({ totalHeroes }: SimpleChanges) {
-    totalHeroes.currentValue && this.generatePages();
+  ngOnChanges({ totalHeroes, currentPage }: SimpleChanges) {
+    if (currentPage && currentPage.currentValue
+      || totalHeroes.currentValue) {
+        this.generatePages();
+    }
   }
 
   totalPagesNumber() {
@@ -29,16 +33,30 @@ export class PaginationComponent implements OnChanges {
 
   generatePages() {
     this.pageList$ = Observable
-      .range(1, this.totalPagesNumber())
+      .range(...this.getPaginationRange(this.currentPage, this.totalPagesNumber()))
       .reduce((total, item) => [...total, item], []);
   }
 
+  getPaginationRange(currentPage, totalPages) {
+    const shownPages = Math.min(totalPages, 5);
+    const sideRange = Math.floor(shownPages / 2);
+
+    let leftBorder = Math.max(currentPage - sideRange, 1);
+    leftBorder = Math.min(leftBorder, totalPages - shownPages + 1);
+  
+    return [leftBorder, shownPages];
+  }
+
+  goToPage(pageNumber) {
+    this.currentPage$.next(pageNumber);
+  }
+
   goToPreviousPage() {
-    this.currentPage$.next(this.currentPage$.value - 1);
+    this.goToPage(this.currentPage - 1);
   }
 
   goToNextPage() {
-    this.currentPage$.next(this.currentPage$.value + 1);
+    this.goToPage(this.currentPage + 1);
   }
 
   goToFirstPage() {
@@ -50,11 +68,11 @@ export class PaginationComponent implements OnChanges {
   }
 
   isFirstPage() {
-    return this.currentPage$.value === 1;
+    return this.currentPage === 1;
   }
 
   isLastPage() {
-    return this.currentPage$.value === this.totalPagesNumber();
+    return this.currentPage === this.totalPagesNumber();
   }
 
 }

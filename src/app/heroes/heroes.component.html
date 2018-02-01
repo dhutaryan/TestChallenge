@@ -32,8 +32,10 @@
             <app-spinner *ngIf="loading$ | async"></app-spinner>
           </div>
           <app-pagination 
+            *ngIf="totalHeroes"
             [totalHeroes]="totalHeroes"
             [currentPage$]="currentPage$"
+            [currentPage]="currentPage"
           ></app-pagination>
       </div>
   </div>
