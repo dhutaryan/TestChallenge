@@ -1,3 +1,8 @@
+.spinner-container {
+  display: block;
+  height: 560px;
+}
+
 .spinner {
   position: absolute;
   width: 50px;
