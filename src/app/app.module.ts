@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -27,6 +28,7 @@ import { PaginationComponent } from './heroes/pagination/pagination.component';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    AngularFontAwesomeModule,
   ],
   providers: [
     HeroesService,

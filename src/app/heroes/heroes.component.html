@@ -1,9 +1,13 @@
 <div class="wrapper">
-  <div class="content-main">
-      <div>
-          <h1>Star Wars <small>Encyclopedia</small></h1><hr/>
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-6">
+          <h1>Star Wars <small class="text-muted">Encyclopedia</small></h1><hr/>
           <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Heroes</a></li>
+            <li class="nav-item">
+              <a href="#" class="nav-link active">
+                <fa name="user"></fa>Heroes
+              </a></li>
           </ul>
           <br/>
           <input 
@@ -38,5 +42,6 @@
             [currentPage]="currentPage"
           ></app-pagination>
       </div>
+    </div>
   </div>
 </div>
