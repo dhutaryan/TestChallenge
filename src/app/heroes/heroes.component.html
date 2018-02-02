@@ -31,6 +31,7 @@
               </thead>
               <tbody>
                 <tr app-hero *ngFor="let hero of heroes" [hero]="hero"></tr>
+                <div *ngIf="totalHeroes === 0">No data available</div>
               </tbody>
             </table>
             <app-spinner *ngIf="loading$ | async"></app-spinner>
