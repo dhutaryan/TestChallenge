@@ -2,3 +2,8 @@ nav {
     display: flex;
     justify-content: center;
 }
+
+a.page-link {
+    color: #007bff;
+    cursor: pointer;
+}

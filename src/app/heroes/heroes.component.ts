@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { HeroesService } from './heroes.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { ActivatedRoute } from '@angular/router';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -25,14 +27,18 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[];
   totalHeroes: number;
   loading$ = new BehaviorSubject<boolean>(false);
-  currentPage$ = new BehaviorSubject<number>(1);
-  currentPage = this.currentPage$.value;
+  currentPage$ = new Subject<number>();
+  currentPage: number;
 
-  constructor(private heroesService: HeroesService) { }
+  constructor(private heroesService: HeroesService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.searchField = new FormControl();
     this.initHeroes();
+
+    const page = parseInt(this.route.snapshot.queryParams.page) || 1;
+    this.currentPage$.next(page);
+    this.searchField.patchValue(this.route.snapshot.queryParams.search);
   }
 
   initHeroes() {
@@ -48,7 +54,10 @@ export class HeroesComponent implements OnInit {
     return this.currentPage$
       .distinctUntilChanged()
       .do(() => this.loading$.next(true))
-      .do(page => this.currentPage = page)      
+      .do(page => {
+        this.currentPage = page;
+        this.setUrl(page, this.searchField.value)
+      })
       .switchMap(page => this.heroesService.getHeroes(this.searchField.value, page))
       .do(() => this.loading$.next(false));
   }
@@ -59,8 +68,19 @@ export class HeroesComponent implements OnInit {
       .distinctUntilChanged()
       .do(() => this.loading$.next(true))
       .switchMap(searchTerm => this.heroesService.search(searchTerm))
-      .do(() => this.currentPage = 1)
+      .do(() => {
+        this.currentPage = 1;
+        this.setUrl(this.currentPage, this.searchField.value);
+      })
       .do(() => this.loading$.next(false))
       .catch(err => Observable.throw(err));
+  }
+
+  setUrl(page, searchTerm) {
+    if (!searchTerm) {
+      searchTerm = '';
+    }
+
+    window.history.replaceState({}, '', `heroes?page=${page}&search=${searchTerm}`);
   }
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -13,6 +14,10 @@ import { HeroesService } from './heroes/heroes.service';
 import { GenderClassPipe } from './heroes/hero/gender-class.pipe';
 import { PaginationComponent } from './heroes/pagination/pagination.component';
 
+const routes: Routes = [
+  { path: 'heroes', component: HeroesComponent },
+  { path: '', redirectTo: '/heroes', pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [
@@ -29,6 +34,7 @@ import { PaginationComponent } from './heroes/pagination/pagination.component';
     HttpClientModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [
     HeroesService,
